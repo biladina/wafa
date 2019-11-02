@@ -24,5 +24,5 @@ Aplikasi ini berlisensi MIT, untuk lebih jelas, lihat pada file LICENSE
 Author
 ------
 
-Nabil Munawar, member of Biladina Inc.
-Nadhilah Maulidiya, member of Biladina Inc.
+- Nabil Munawar, member of Biladina Inc.
+- Nadhilah Maulidiya, member of Biladina Inc.

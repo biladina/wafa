@@ -1,0 +1,38 @@
+{
+  "name": "wafa",
+  "productName": "Al-Wafa'",
+  "version": "1.0.0",
+  "description": "Aplikasi Pembelajaran Bahasa Arab",
+  "main": "main.js",
+  "repository": "https://github.com/biladina/wafa",
+  "author": "Nabil Munawar",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "3.0.8",
+    "electron-packager": "12.2.0",
+    "electron-winstaller": "^4.0.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "start-mac": "/Applications/Electron.app/Contents/MacOS/Electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=app/assets/icon/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . wafa --overwrite --platform=win32 --arch=ia32 --icon=app/assets/icon/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName='Biladina Inc.' --version-string.FileDescription=CE --version-string.ProductName='Al-Wafa'",
+    "package-linux": "electron-packager . wafa --overwrite --platform=linux --arch=x64 --icon=app/assets/icon/png/1024x1024.png --prune=true --out=release-builds",
+    "create-installer-mac": "electron-installer-dmg ./release-builds/Wafa-darwin-x64/Wafa.app wafa --out=release-builds --overwrite --icon=app/assets/icon/mac/icon.icns",
+    "create-installer-win": "node installers/windows/createinstaller.js",
+    "create-debian-installer": "electron-installer-debian --src release-builds/wafa-linux-x64/ --arch amd64 --config debian.json"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "cheerio": "^0.22.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.12.9",
+    "sql.js": "^0.4.0",
+    "tether": "^1.4.0"
+  },
+  "standard": {
+    "globals": [
+      "$"
+    ]
+  }
+}

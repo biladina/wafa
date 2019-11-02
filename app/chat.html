@@ -1,0 +1,152 @@
+
+<html class="no-js" lang="en">
+
+<head>
+    <!--====== USEFULL META ======-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--====== STYLESHEETS ======-->
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/progressbar.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
+    <!--====== MAIN STYLESHEETS ======-->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+
+<body style="background-color: #c7ecee;">
+    <!--- PRELOADER -->
+    <div class="preeloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <!--PORTFOLIO AREA-->
+    <section class="padding-30">
+        <div class="container">
+            <div class="seven-cols">
+                <div class="col-hard-1">
+                    <a href="javascript:;" id="tombol_kompetensi" class="btn btn-sm btn-success" data-toggle="modal" data-target="#kompetensi" data-backdrop="static" data-keyboard="false">Kompetensi</a>
+                </div>
+                <div class="col-hard-1">
+                    <div class="area-title text-center fadeIn">
+                        <h3 class="droid-arabic-naskh" id="judul">Al-Wafa'</h3>
+                    </div>
+                </div>
+                <div class="col-hard-1">
+                    <a href="index.html" class="btn btn-sm btn-primary pull-right">Kembali</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 full-height">
+                    <div class="content container-fluid bootstrap snippets">
+                        <div class="row row-broken">
+                            <div class="col-sm-12 col-xs-12 chat" style="">
+                                <div id="prc" class="col-inside-lg decor-default">
+                                    <div id="data_chat" class="chat-body"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 full-height">
+                    <div class="content container-fluid bootstrap snippets">
+                        <div id="kamus"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--PORTFOLIO AREA END-->
+
+    <div class="modal fade" id="kompetensi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-success">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Indikator Pencapaian Kompetensi</h4>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="renderer.js"></script>
+
+<!--====== PLUGINS JS ======-->
+<script src="assets/js/vendor/jquery.easing.1.3.js"></script>
+<script src="assets/js/vendor/jquery-migrate-1.2.1.min.js"></script>
+
+<!--===== ACTIVE JS=====-->
+<script src="assets/js/mainly.js"></script>
+<script type="text/javascript">
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    $('#dt').html(id);
+
+    function play_audio(filename)
+    {
+        var audio = new Audio("audio/"+id+"/"+filename+".mp3");
+        audio.play();
+    }
+
+    $(document).ready(function()
+    {
+        function ganjil(num) { return (num % 2) == 1; }
+
+        var data_percakapan = model.getPercakapan(id);
+
+        for (let rowId in data_percakapan)
+        {
+            let row = data_percakapan[rowId];
+            console.log(data_percakapan);
+            if(ganjil(row.nomor_urut))
+            {
+                $('#data_chat').append("<div class='answer left droid-arabic-naskh'><div class='avatar'><img src='assets/img/avatar1.png' onclick='play_audio("+row.nomor_urut+");'></div><div class='text' style='font-size: 25px; line-height: 2;'>"+row.percakapan+"</div></div>");
+            }
+            else
+            {
+                $('#data_chat').append("<div class='answer right droid-arabic-naskh'><div class='avatar'><img src='assets/img/avatar2.png' onclick='play_audio("+row.nomor_urut+");'></div><div class='text' style='font-size: 25px; line-height: 2;'>"+row.percakapan+"</div></div>");
+            }
+        }
+
+        var data_kamus = model.getKamus(id);
+
+        var markup = "<table style='font-size: 25px; direction: RTL;' class='table table-hover table-responsive droid-arabic-naskh'><thead><tr class='success'><th class='text-center'>Kata</th><th class='text-center'>Arti</th></tr></thead><tbody>";
+
+        for (let rowId in data_kamus)
+        {
+            let row = data_kamus[rowId];
+            markup += "<tr class='success'><td>"+row.kata+"</td><td>"+row.arti+"</td></tr>";
+        }
+
+        markup += "</tbody></table>";
+        $('#kamus').append(markup);
+
+        var detail_percakapan = model.getDetailPercakapan(id)[0];
+
+        var judul_ = detail_percakapan.nama_percakapan;
+
+        var judul = judul_.split(' : ');
+
+        $('#judul').text(judul[1]);
+
+        $('.modal-body').append("<p class='droid-arabic-naskh' style='font-size: 20px;'>+ Mengetahui makna mufrodat yang ada dalam percakapan tentang "+judul[1]+"</p>");
+        $('.modal-body').append("<p class='droid-arabic-naskh' style='font-size: 20px;'>+ Mengidentifikasi percakapan tentang "+judul[1]+"</p>");
+        $('.modal-body').append("<p class='droid-arabic-naskh' style='font-size: 20px;'>+ Melakukan dialog sederhana tentang "+judul[1]+"</p>");
+    });
+
+    $('#game').on('hidden.bs.modal', function () {
+        $('.modal-body').html('');
+    });
+</script>
+
+</html>

@@ -25,7 +25,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "cheerio": "^0.22.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.12.9",
     "sql.js": "^0.4.0",
     "tether": "^1.4.0"
